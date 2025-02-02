@@ -5,27 +5,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-test-react-app:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3  # Updated to the latest version
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3  # Updated to the latest version
-      with:
-        node-version: '16'
-
-    - name: Install dependencies
-      run: |
-        npm install
-
-    - name: Build the app
-      run: |
-        npm run build
-
-    - name: Upload build artifact (optional)
-      uses: actions/upload-artifact@v3  # Updated to the latest version
-      with:
-        name: react-build
-        path: build/
+      - name: checkout code
+        uses: actions/checkout@v3
+      - name: install packages
+        run: npm ci
+      - name: run tests
+        run: CI=true npm run test
+      - name: build app
+        run: npm run build
